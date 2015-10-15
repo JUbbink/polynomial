@@ -6,6 +6,8 @@
 package polynomial;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  *
@@ -31,6 +33,17 @@ public class polynomial {
             num = Integer.parseInt(b.get(i).toString());
             polynomial[i][1] = num;
         }
+    }
+    public static Integer[][] mysort(Integer[][] ar) {
+        Arrays.sort(ar, new Comparator<Integer[]>() {
+            @Override
+            public int compare(Integer[] int1, Integer[] int2) {
+                Integer numOfKeys1 = int1[1];
+                Integer numOfKeys2 = int2[1];
+                return numOfKeys1.compareTo(numOfKeys2);
+            }
+        });
+        return ar;
     }
 }
 
