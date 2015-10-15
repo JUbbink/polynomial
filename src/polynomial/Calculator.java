@@ -154,7 +154,7 @@ public class Calculator {
         for (int i = 0; i < poly2.combined.length; i++){
             for(int x = 0; x < poly1.combined.length; x++){
                 if (poly2.getOrder(i) == poly1.getOrder(x)){
-                    add.editCoefficient(i, poly2.getCoefficient(i));
+                    add.editCoefficient(x, poly2.getCoefficient(i));
                     break;
                 }
             }
