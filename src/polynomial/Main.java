@@ -9,7 +9,7 @@ package polynomial;
  *
  * @author s127855
  */
-public class Polynomial {
+public class Main {
 
     /**
      * @param args the command line arguments
