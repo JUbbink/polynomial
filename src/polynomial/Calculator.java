@@ -144,7 +144,7 @@ public class Calculator {
             else if(count != poly1.getOrder(num1) && count != poly2.getOrder(num2)){
                 count--;
             }
-        }
+        }tests
                 */
         
         for (int i = 0; i < poly1.combined.length; i++){
