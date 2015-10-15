@@ -39,7 +39,7 @@ public class Polynomial {
     }
     
     public void editCoefficient(int index, int num){
-        int old = coefficient.get(num);
+        int old = coefficient.get(index);
         coefficient.set(index, old + num);
     }
     //create a 2d array from the 2 arraylist such that the first collumn contains the coefficient and the second collumn the order
