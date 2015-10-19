@@ -49,114 +49,89 @@ public class Parser {
 
         
         if(parts.length == 5){//either case4 or 5
-            if(parts[4]=="div"){//then is case 5, do division
-                Polynomial poly1 = new Polynomial();
-                Polynomial poly2 = new Polynomial();
-                int prime = Integer.parseInt(parts[3]);
+            Polynomial poly1 = new Polynomial();
+            Polynomial poly2 = new Polynomial();
+            int prime = Integer.parseInt(parts[3]);
                 
-                int count = parts[1].replaceAll("\\D", "").length();
-                for(int i; i < count; i++){
-                    poly1.setCoefficient(Integer.parseInt(parts[1].charAt(i)+""));
-                    poly1.setOrder(count);
-                }
-                poly1.create();
-                        
-                count = parts[2].replaceAll("\\D", "").length();
-                for(int i; i < count; i++){
-                    poly2.setCoefficient(Integer.parseInt(parts[2].charAt(i)+""));
-                    poly2.setOrder(count);
-                }
-                poly2.create();
-                //do division
-
+            int count = parts[1].replaceAll("\\D", "").length();
+            for(int i = 0; i < count; i++){
+                poly1.setCoefficient(Integer.parseInt(parts[1].charAt(i)+""));
+                poly1.setOrder(count);
             }
-            else if(parts[4]=="gcd"){//then is case 4, do gcd
-                Polynomial poly1 = new Polynomial();
-                Polynomial poly2 = new Polynomial();
-                int prime = Integer.parseInt(parts[3]);
-                
-                int count = parts[1].replaceAll("\\D", "").length();
-                for(int i; i < count; i++){
-                    poly1.setCoefficient(Integer.parseInt(parts[1].charAt(i)+""));
-                    poly1.setOrder(count);
-                }
-                poly1.create();
+            poly1.create();
                         
-                count = parts[2].replaceAll("\\D", "").length();
-                for(int i; i < count; i++){
-                    poly2.setCoefficient(Integer.parseInt(parts[2].charAt(i)+""));
-                    poly2.setOrder(count);
-                }
-                poly2.create();
+            count = parts[2].replaceAll("\\D", "").length();
+            for(int i = 0; i < count; i++){
+                poly2.setCoefficient(Integer.parseInt(parts[2].charAt(i)+""));
+                poly2.setOrder(count);
+            }
+            poly2.create();
+                
+            if(parts[4].equals("div")){//case 5
+                //do division
+            }
+            else if(parts[4].equals("gcd")){//case 4
                 //do gcd
-
             }
         }
         else if(parts.length==4){//remaining three cases
-                if(parts[3].contains(",")){//contains a polynomial, thus case1
-                    Polynomial poly1 = new Polynomial();
-                    Polynomial poly2 = new Polynomial();
-                    Polynomial poly3 = new Polynomial();
-                
-                    int count = parts[1].replaceAll("\\D", "").length();
-                    for(int i; i < count; i++){
-                        poly1.setCoefficient(Integer.parseInt(parts[1].charAt(i)+""));
-                        poly1.setOrder(count);
-                    }
-                    poly1.create();
-                        
-                    count = parts[2].replaceAll("\\D", "").length();
-                    for(int i; i < count; i++){
-                        poly2.setCoefficient(Integer.parseInt(parts[2].charAt(i)+""));
-                        poly2.setOrder(count);
-                    }
-                    poly2.create();
-                
-                    count = parts[3].replaceAll("\\D", "").length();
-                    for(int i; i < count; i++){
-                        poly3.setCoefficient(Integer.parseInt(parts[2].charAt(i)+""));
-                        poly3.setOrder(count);
-                    }
-                    poly3.create();
-                    //do math
+            Polynomial poly1 = new Polynomial();
+            int count = parts[1].replaceAll("\\D", "").length();
+            for(int i = 0; i < count; i++){
+                poly1.setCoefficient(Integer.parseInt(parts[1].charAt(i)+""));
+                poly1.setOrder(count);
+            }
+            poly1.create();
+            
+            if(parts[1].contains(",") && parts[2].contains(",") && parts[3].contains(",")){//contains a polynomial, thus case1
+                Polynomial poly2 = new Polynomial();
+                Polynomial poly3 = new Polynomial();
+
+                count = parts[2].replaceAll("\\D", "").length();
+                for(int i = 0; i < count; i++){
+                    poly2.setCoefficient(Integer.parseInt(parts[2].charAt(i)+""));
+                    poly2.setOrder(count);
                 }
+                poly2.create();
                 
-                else if(!parts[2].contains(",")){//is a coefficient, thus case 3
-                    Polynomial poly1 = new Polynomial();
-                    int coefficient = Integer.parseInt(parts[2]);
-                    int prime = Integer.parseInt(parts[3]);
-                
-                    int count = parts[1].replaceAll("\\D", "").length();
-                    for(int i; i < count; i++){
-                        poly1.setCoefficient(Integer.parseInt(parts[1].charAt(i)+""));
-                        poly1.setOrder(count);
-                    }
-                    poly1.create();
-                    //do math
+                count = parts[3].replaceAll("\\D", "").length();
+                for(int i = 0; i < count; i++){
+                    poly3.setCoefficient(Integer.parseInt(parts[2].charAt(i)+""));
+                    poly3.setOrder(count);
                 }
+                poly3.create();
+                //do math
+            }
                 
-                else{//only case 2 remains
-                    Polynomial poly1 = new Polynomial();
-                    Polynomial poly2 = new Polynomial();
-                    int prime = Integer.parseInt(parts[3]);
+            else if(parts[1].contains(",") && !parts[2].contains(",") && !parts[3].contains(",")){//is a coefficient, thus case 3
+                int coefficient = Integer.parseInt(parts[2]);
+                int prime = Integer.parseInt(parts[3]);
                 
-                    int count = parts[1].replaceAll("\\D", "").length();
-                    for(int i; i < count; i++){
-                        poly1.setCoefficient(Integer.parseInt(parts[1].charAt(i)+""));
-                        poly1.setOrder(count);
-                    }
-                    poly1.create(); 
-                    
-                    count = parts[2].replaceAll("\\D", "").length();
-                    for(int i; i < count; i++){
-                        poly2.setCoefficient(Integer.parseInt((parts[2].charAt(i))+""));
-                        poly2.setOrder(count);
-                    }
-                    poly2.create();
-                    //do math
+                //do math
+            }
+                
+            else if(parts[1].contains(",") && parts[2].contains(",") && !parts[3].contains(",")){//only case 2 remains
+                Polynomial poly2 = new Polynomial();
+                int prime = Integer.parseInt(parts[3]);
+                
+                count = parts[2].replaceAll("\\D", "").length();
+                for(int i = 0; i < count; i++){
+                  poly2.setCoefficient(Integer.parseInt((parts[2].charAt(i))+""));
+                    poly2.setOrder(count);
                 }
+                poly2.create();
+                //do math
             }
         }
+    }
+    
+    private String parsePoly(Polynomial p){
+        String output = "";
+        for(int i = 0; i < p.getSize(); i++){
+            output = output +"+"+ p.getCoefficient(i)+"X^"+p.getOrder(i);
+        }
+        return output;
+    }
         
         // three polynomials, where you decide if poly1 = poly2 mod poly3
         // case1 is: "poly" poly1 poly2 poly3
@@ -172,34 +147,6 @@ public class Parser {
         
         // two polynomials, mod prime, do long division (return quotient and remainder)
         // case5 is: "poly" poly1 poly2 prime "div"
-        
-//        if(parts[0] == "poly"){
-//            if(parts.length == 4 && parts[4] != null){
-//                if(parts[4] == "div"){
-//                    //do case5
-//                    Polynomial poly1 = new Polynomial();
-//                    Polynomial poly2 = new Polynomial();
-//                    int prime = 0;
-//                    
-//                    prime = extractInt(parts[3]);
-//                    while(parts[1])
-//                    
-//                    //do division
-//                }
-//                else if(parts[4] == "gcd"){
-//                    //do case4
-//                }
-//            }
-//            else if(!parts[2].matches("*X*")){
-//                //do case3
-//            }
-//            else if(parts.length<4 && parts[3].matches("")){
-//                //do case2
-//            }
-//            else if(parts.length<4 && parts[3].substring(0, 1).matches("[0-9]")){
-//                //do case1
-//            }
-//        }
         
         //prime number p and irreducible polynomial, return addition and multiplication table
         //case1 is: "FF" prime poly1
@@ -217,26 +164,26 @@ public class Parser {
         //case5 is: "FF" poly modp
         
         
-        else if(parts[0]== "FF"){
-            //TODO - Finite Field parsing
-            if(parts.length == 2){
-                //case4
-            }
-            else if(parts[2].matches("*mod*")){
-                //case5
-            }
-            else if(parts[2].matches("*X*")){
-                //case1
-            }
-            else if(parts[2].substring(0, 1).matches("[0-9]") && parts[2].length()==1){
-                //case2
-            }
-            else if(parts[2]=="a field"){ //TODO defining a field field/polynomial
-                //case3
-            }
-            
-        }
+//        else if(parts[0]== "FF"){
+//            //TODO - Finite Field parsing
+//            if(parts.length == 2){
+//                //case4
+//            }
+//            else if(parts[2].matches("*mod*")){
+//                //case5
+//            }
+//            else if(parts[2].matches("*X*")){
+//                //case1
+//            }
+//            else if(parts[2].substring(0, 1).matches("[0-9]") && parts[2].length()==1){
+//                //case2
+//            }
+//            else if(parts[2]=="a field"){ //TODO defining a field field/polynomial
+//                //case3
+//            }
+//            
+//        }
         
-    }
+ //   }
     
 }
