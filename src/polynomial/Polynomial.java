@@ -42,6 +42,11 @@ public class Polynomial {
         int old = coefficient.get(index);
         coefficient.set(index, old + num);
     }
+    
+    public void modCoefficient(int index, int num){
+        int old = getCoefficient(index);
+        combined[index][0] = old % num;
+    }
     //create a 2d array from the 2 arraylist such that the first collumn contains the coefficient and the second collumn the order
     //the array is also sorted on the order from highest to lowest
     //you NEED to call this method otherwise the polynomial won't be created, you will just have 2 unconnected arraylists
