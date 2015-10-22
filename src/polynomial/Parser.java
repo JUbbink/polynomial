@@ -34,8 +34,9 @@ import java.lang.*;
  */
 public class Parser {
     
-    public static void main(String args[]){
-        
+    public void main(String args[]){
+        Scanner s = new Scanner(System.in);
+        Parser(s);
     }
     
     public void Parser(Scanner s){
@@ -69,6 +70,9 @@ public class Parser {
                 
             if(parts[4].equals("div")){//case 5
                 //do division
+                System.out.println(parsePoly(poly1));
+                System.out.println(parsePoly(poly2));
+                System.out.println(prime);
             }
             else if(parts[4].equals("gcd")){//case 4
                 //do gcd
