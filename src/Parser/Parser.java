@@ -53,13 +53,9 @@ public class Parser {
         
         if(parts.length == 5){//either case4 or 5
             int prime = Integer.parseInt(parts[3]);
-            Polynomial poly1 = new Polynomial(prime);
-            Polynomial poly2 = new Polynomial(prime);
+            Polynomial poly1 = stringToPoly(parts[1],prime);
+            Polynomial poly2 = stringToPoly(parts[2],prime);
             
-            /* TODO: Fill HashMaps and setTerms */
-            
-            
-                
             if(parts[4].equals("div")){//case 5
                 //do division
                 poly1.divide(poly2);
@@ -75,28 +71,24 @@ public class Parser {
         }
         else if(parts.length==4){//remaining three cases
             
-            if(parts[1].contains(",") && parts[2].contains(",") && parts[3].contains(",")){//contains a polynomial, thus case1
-                Polynomial poly1 = new Polynomial(1);
-                Polynomial poly2 = new Polynomial(1);
-                Polynomial poly3 = new Polynomial(1);
-
-            /* TODO: Fill HashMaps and setTerms */
+            if(verifyPart(parts[1]) && verifyPart(parts[2]) && verifyPart(parts[3])){//contains a polynomial, thus case1
+                Polynomial poly1 = stringToPoly(parts[1],1);
+                Polynomial poly2 = stringToPoly(parts[2],1);
+                Polynomial poly3 = stringToPoly(parts[3],1);
                 
                 //do math
             }
                 
-            else if(parts[1].contains(",") && !parts[2].contains(",") && !parts[3].contains(",")){//is a coefficient, thus case 3
+            else if(verifyPart(parts[1]) && !verifyPart(parts[2]) && !verifyPart(parts[3])){//is a coefficient, thus case 3
                 int coefficient = Integer.parseInt(parts[2]);
                 int prime = Integer.parseInt(parts[3]);
                 Polynomial poly1 = new Polynomial(prime);
-                
-                /* TODO: Fill HashMaps and setTerms */
                 
                 poly1.scalar(coefficient);
                 System.out.println(parsePoly(poly1));
             }
                 
-            else if(parts[1].contains(",") && parts[2].contains(",") && !parts[3].contains(",")){//only case 2 remains
+            else if(verifyPart(parts[1]) && verifyPart(parts[2]) && !verifyPart(parts[3])){//only case 2 remains
                 int prime = Integer.parseInt(parts[3]);
                 Polynomial poly1 = new Polynomial(prime);
                 Polynomial poly2 = new Polynomial(prime);
@@ -170,64 +162,64 @@ public class Parser {
             String value = entry.getValue().toString();  
             output = output + key + "X^" + value + " + ";  
         } 
-        System.out.println(output);
+//      System.out.println(output);
         return output;
     }
     
-    private boolean verify_part(String s) {
-        Scanner string_scanner = new Scanner(s);
+    private boolean verifyPart(String s) {
+        Scanner stringScanner = new Scanner(s);
 
         /* Check if there is a coefficient */
-        if(!(string_scanner.hasNextInt())) {
+        if(!(stringScanner.hasNextInt())) {
             return false;
         } else {
             /* Consume int */
-            string_scanner.nextInt();
+            stringScanner.nextInt();
         }
 
         /* Check for the "X^" */
-        if(!(string_scanner.hasNext("X^"))) {
+        if(!(stringScanner.hasNext("X^"))) {
             return false;
         } else {
             /* Consume "X^" */
-            string_scanner.next("X^");
+            stringScanner.next("X^");
         }
 
         /* Check if there is an order */
-        if(!(string_scanner.hasNextInt())) {
+        if(!(stringScanner.hasNextInt())) {
             return false;
         } else {
             /* Consume int */
-            string_scanner.nextInt();
+            stringScanner.nextInt();
         }
 
         return true;
     }
-    public Polynomial string_to_poly(String s) {
+    public Polynomial stringToPoly(String s, int m) {
 
         /* Split up and process the terms */
         String parts[] = s.split("+");
-        Map<Integer, Integer> new_poly_terms = new HashMap();
+        Map<Integer, Integer> newPolyTerms = new HashMap();
 
         for (String p:parts) {
             /* Check if p's formatting is valid */
-            if (verify_part(p)) {
-                Scanner part_scanner = new Scanner(p);
+            if (verifyPart(p)) {
+                Scanner partScanner = new Scanner(p);
 
-                int new_coefficient = part_scanner.nextInt();
-                part_scanner.next("X^");
-                int new_order = part_scanner.nextInt();
+                int newCoefficient = partScanner.nextInt();
+                partScanner.next("X^");
+                int newOrder = partScanner.nextInt();
 
-                new_poly_terms.put(new_coefficient, new_order);
+                newPolyTerms.put(newCoefficient, newOrder);
             } else {
                 /* Do error handling */
             }
         }
 
         /* Create new polynomial and set it's terms to the new terms */
-        Polynomial new_poly = new Polynomial(16); /* TODO add prime */
-        new_poly.setTerms(new_poly_terms);
-        return new_poly;
+        Polynomial newPoly = new Polynomial(m); /* TODO add prime */
+        newPoly.setTerms(newPolyTerms);
+        return newPoly;
     }
         
         // three polynomials, where you decide if poly1 = poly2 mod poly3
