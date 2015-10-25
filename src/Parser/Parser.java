@@ -56,66 +56,64 @@ public class Parser {
             Polynomial poly1 = new Polynomial(prime);
             Polynomial poly2 = new Polynomial(prime);
             
+            /* TODO: Fill HashMaps and setTerms */
+            
+            
                 
             if(parts[4].equals("div")){//case 5
                 //do division
+                poly1.divide(poly2);
                 System.out.println(parsePoly(poly1));
-                System.out.println(parsePoly(poly2));
-                System.out.println(prime);
             }
             else if(parts[4].equals("gcd")){//case 4
                 //do gcd
+                poly1.gcd(poly2);
+                System.out.println(parsePoly(poly1));
+                poly1.xGCD(poly2);
+                System.out.println(parsePoly(poly1));
             }
         }
         else if(parts.length==4){//remaining three cases
-            Polynomial poly1 = new Polynomial();
-            int count = parts[1].replaceAll("\\D", "").length();
-            for(int i = 0; i < count; i++){
-                poly1.setCoefficient(Integer.parseInt(parts[1].charAt(i)+""));
-                poly1.setOrder(count);
-            }
-            poly1.create();
             
             if(parts[1].contains(",") && parts[2].contains(",") && parts[3].contains(",")){//contains a polynomial, thus case1
-                Polynomial poly2 = new Polynomial();
-                Polynomial poly3 = new Polynomial();
+                Polynomial poly1 = new Polynomial(1);
+                Polynomial poly2 = new Polynomial(1);
+                Polynomial poly3 = new Polynomial(1);
 
-                count = parts[2].replaceAll("\\D", "").length();
-                for(int i = 0; i < count; i++){
-                    poly2.setCoefficient(Integer.parseInt(parts[2].charAt(i)+""));
-                    poly2.setOrder(count);
-                }
-                poly2.create();
+            /* TODO: Fill HashMaps and setTerms */
                 
-                count = parts[3].replaceAll("\\D", "").length();
-                for(int i = 0; i < count; i++){
-                    poly3.setCoefficient(Integer.parseInt(parts[2].charAt(i)+""));
-                    poly3.setOrder(count);
-                }
-                poly3.create();
                 //do math
             }
                 
             else if(parts[1].contains(",") && !parts[2].contains(",") && !parts[3].contains(",")){//is a coefficient, thus case 3
                 int coefficient = Integer.parseInt(parts[2]);
                 int prime = Integer.parseInt(parts[3]);
+                Polynomial poly1 = new Polynomial(prime);
                 
-                //do math
+                /* TODO: Fill HashMaps and setTerms */
+                
+                poly1.scalar(coefficient);
+                System.out.println(parsePoly(poly1));
             }
                 
             else if(parts[1].contains(",") && parts[2].contains(",") && !parts[3].contains(",")){//only case 2 remains
-                Polynomial poly2 = new Polynomial();
                 int prime = Integer.parseInt(parts[3]);
+                Polynomial poly1 = new Polynomial(prime);
+                Polynomial poly2 = new Polynomial(prime);
                 
-                count = parts[2].replaceAll("\\D", "").length();
-                for(int i = 0; i < count; i++){
-                  poly2.setCoefficient(Integer.parseInt((parts[2].charAt(i))+""));
-                    poly2.setOrder(count);
-                }
-                poly2.create();
-                //do math
+                /* TODO: Fill HashMaps and setTerms */
+                
+                poly1.add(poly2);
+                System.out.println(parsePoly(poly1));
+                
+                poly1.subtract(poly2);
+                System.out.println(parsePoly(poly1));
+                
+                poly1.multiply(poly2);
+                System.out.println(parsePoly(poly1));
             }
         }
+    }
         
 //        else if(parts[0].equals("FF")){
 //            if(parts[1].matches("\\d")){//case 1,2,3,5
@@ -160,8 +158,8 @@ public class Parser {
         
         //test irreducibility of a poly mod p, return irreducible polynomials
         //case5 is: "FF" poly prime
-        }
-    }
+//        }
+//    }
     
     private String parsePoly(Polynomial p){
         String output = "";
