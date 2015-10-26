@@ -41,125 +41,125 @@ public class Parser {
         String s = "";
         System.out.println("Press Start:");
         Scanner scan = new Scanner(System.in);
-        s = scan.nextLine();
-        System.out.println(s);
+        while(true){
+            s = scan.nextLine();
+            String[] parts = s.split(" ");//this gets me an array of all the separate elements
 
-        String[] parts = s.split(" ");//this gets me an array of all the separate elements
-        
-        // three polynomials, where you decide if poly1 = poly2 mod poly3
-        // case1 is: "poly" "polymod" poly1 poly2 poly3
+            // three polynomials, where you decide if poly1 = poly2 mod poly3
+            // case1 is: "poly" "polymod" poly1 poly2 poly3
 
-        // two polynomials mod prime, where you do sum, difference, product
-        // case2 is: "poly" "basic" poly1 poly2 prime
-        
-        // a multiplication coefficient , and one polynomial mod prime where you do the scalar multiplication
-        // case3 is: "poly" "scalar" poly1 coefficient prime
- 
-        // two polynomials, mod prime, do xGCD
-        // case4 is: "poly" "GCD" poly1 poly2 prime
-        
-        // two polynomials, mod prime, do long division (return quotient and remainder)
-        // case5 is: "poly" "division" poly1 poly2 prime
-        
-        if(parts.length>0){
-            if(parts[0].equals("poly")){
-                if(parts[1].equals("polymod")){
-                    try{
-                        Polynomial poly1 = stringToPoly(parts[2]);
-                        Polynomial poly2 = stringToPoly(parts[3]);
-                        Polynomial poly3 = stringToPoly(parts[4]);
-                        
-                        //do math
-                        System.out.println("Not yet implemented.");
+            // two polynomials mod prime, where you do sum, difference, product
+            // case2 is: "poly" "basic" poly1 poly2 prime
+
+            // a multiplication coefficient , and one polynomial mod prime where you do the scalar multiplication
+            // case3 is: "poly" "scalar" poly1 coefficient prime
+
+            // two polynomials, mod prime, do xGCD
+            // case4 is: "poly" "GCD" poly1 poly2 prime
+
+            // two polynomials, mod prime, do long division (return quotient and remainder)
+            // case5 is: "poly" "division" poly1 poly2 prime
+
+            if(parts.length>0){
+                if(parts[0].equals("poly")){
+                    if(parts[1].equals("polymod")){
+                        try{
+                            Polynomial poly1 = stringToPoly(parts[2]);
+                            Polynomial poly2 = stringToPoly(parts[3]);
+                            Polynomial poly3 = stringToPoly(parts[4]);
+
+                            //do math
+                            System.out.println("Not yet implemented.");
+                        }
+                        catch(Exception e){
+                            System.out.println(e.getMessage());
+                        }
+
                     }
-                    catch(Exception e){
-                        System.out.println(e.getMessage());
-                    }
+                    else if(parts[1].equals("basic")){
+                        try{
+                            Polynomial poly1 = stringToPoly(parts[2]);
+                            Polynomial poly2 = stringToPoly(parts[3]);
 
+                            int prime = Integer.parseInt(parts[4]);
+
+                            Polynomial sum = poly1.add(poly2);
+                            System.out.println("Sum: "+sum.parsePoly());
+
+                            Polynomial difference = poly1.subtract(poly2);
+                            System.out.println("Difference: "+difference.parsePoly());
+
+                            Polynomial product = poly1.multiply(poly2);
+                            //System.out.println("Product: "+product.parsePoly());
+                            System.out.println("Not yet implemented.");
+                        }
+                        catch(Exception e){
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    else if(parts[1].equals("scalar")){
+                        try{
+                            int prime = Integer.parseInt(parts[4]);
+                            Polynomial poly1 = stringToPoly(parts[2]);
+                            poly1.setModulo(prime);
+                            int scalar = Integer.parseInt(parts[3]);
+
+                            Polynomial poly2 = poly1.scalar(scalar);
+                            System.out.println("Scalar: "+poly2.parsePoly());
+                        }
+                        catch(Exception e){
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    else if(parts[1].equals("GCD")){
+                        try{
+                            Polynomial poly1 = stringToPoly(parts[2]);
+                            Polynomial poly2 = stringToPoly(parts[3]);
+                            int prime = Integer.parseInt(parts[4]);
+                            poly1.setModulo(prime);
+                            poly2.setModulo(prime);
+
+                            int[] gcdOutput = poly1.gcd(poly2);
+        //                    System.out.println("GCD: "+gcdOutput[0]+","+gcdOutput[1]);
+                            System.out.println("Not yet implemented.");
+                            int[] xGCDOutput = poly1.xGCD(poly2);
+        //                    System.out.println("xGCD: "+xGCDOutput[0]+","+xGCDOutput[1]);
+                            System.out.println("Not yet implemented.");
+                        }
+                        catch(Exception e){
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    else if(parts[1].equals("division")){
+                        try{
+                            Polynomial poly1 = stringToPoly(parts[2]);
+                            Polynomial poly2 = stringToPoly(parts[3]);
+                            int prime = Integer.parseInt(parts[4]);
+                            poly1.setModulo(prime);
+                            poly2.setModulo(prime);
+
+                            Polynomial poly3 = poly1.divide(poly2);
+                            //System.out.println("Division: "+poly3.parsePoly());
+                            System.err.println("Not yet implemented.");
+                        }
+                        catch(Exception e){
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    else{
+                        System.out.println("Please make a valid selection.");
+                    }
                 }
-                else if(parts[1].equals("basic")){
-                    try{
-                        Polynomial poly1 = stringToPoly(parts[2]);
-                        Polynomial poly2 = stringToPoly(parts[3]);
-
-                        int prime = Integer.parseInt(parts[4]);
-
-                        Polynomial sum = poly1.add(poly2);
-                        System.out.println("Sum: "+sum.parsePoly());
-
-                        Polynomial difference = poly1.subtract(poly2);
-                        System.out.println("Difference: "+difference.parsePoly());
-
-                        Polynomial product = poly1.multiply(poly2);
-                        //System.out.println("Product: "+product.parsePoly());
-                        System.out.println("Not yet implemented.");
-                    }
-                    catch(Exception e){
-                        System.out.println(e.getMessage());
-                    }
-                }
-                else if(parts[1].equals("scalar")){
-                    try{
-                        int prime = Integer.parseInt(parts[4]);
-                        Polynomial poly1 = stringToPoly(parts[2]);
-                        poly1.setModulo(prime);
-                        int scalar = Integer.parseInt(parts[3]);
-
-                        Polynomial poly2 = poly1.scalar(scalar);
-                        System.out.println("Scalar: "+poly2.parsePoly());
-                    }
-                    catch(Exception e){
-                        System.out.println(e.getMessage());
-                    }
-                }
-                else if(parts[1].equals("GCD")){
-                    try{
-                        Polynomial poly1 = stringToPoly(parts[2]);
-                        Polynomial poly2 = stringToPoly(parts[3]);
-                        int prime = Integer.parseInt(parts[4]);
-                        poly1.setModulo(prime);
-                        poly2.setModulo(prime);
-
-                        int[] gcdOutput = poly1.gcd(poly2);
-    //                    System.out.println("GCD: "+gcdOutput[0]+","+gcdOutput[1]);
-                        System.out.println("Not yet implemented.");
-                        int[] xGCDOutput = poly1.xGCD(poly2);
-    //                    System.out.println("xGCD: "+xGCDOutput[0]+","+xGCDOutput[1]);
-                        System.out.println("Not yet implemented.");
-                    }
-                    catch(Exception e){
-                        System.out.println(e.getMessage());
-                    }
-                }
-                else if(parts[1].equals("division")){
-                    try{
-                        Polynomial poly1 = stringToPoly(parts[2]);
-                        Polynomial poly2 = stringToPoly(parts[3]);
-                        int prime = Integer.parseInt(parts[4]);
-                        poly1.setModulo(prime);
-                        poly2.setModulo(prime);
-
-                        Polynomial poly3 = poly1.divide(poly2);
-                        //System.out.println("Division: "+poly3.parsePoly());
-                        System.err.println("Not yet implemented.");
-                    }
-                    catch(Exception e){
-                        System.out.println(e.getMessage());
-                    }
+                else if(parts[0].equals("FF")){
+                    System.out.println("This functionality is not implemented yet.");
                 }
                 else{
                     System.out.println("Please make a valid selection.");
                 }
             }
-            else if(parts[0].equals("FF")){
-                System.out.println("This functionality is not implemented yet.");
-            }
             else{
-                System.out.println("Please make a valid selection.");
+                System.out.println("Please enter a valid command.");
             }
-        }
-        else{
-            System.out.println("Please enter a valid command.");
         }
     }
     
