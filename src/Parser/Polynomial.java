@@ -1,6 +1,8 @@
 package Parser;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -41,14 +43,16 @@ public class Polynomial {
         this.modulus = m;
     }
     
-    public Polynomial(Map<Integer,Integer> terms , int m){
-        this.terms = terms;
+    public Polynomial(Map<Integer,Integer> a_terms , int m){
+        this.terms = new HashMap(a_terms);
         this.modulus = m;
+        this.updateModulo();
     }
     
-    public Polynomial(Map<Integer,Integer> terms){
-        this.terms = terms;
+    public Polynomial(Map<Integer,Integer> a_terms){
+        this.terms = new HashMap(a_terms);
         this.modulus = 1;
+        this.updateModulo();
     }
     
     public Polynomial(){
@@ -59,32 +63,40 @@ public class Polynomial {
     }
 
     /* Re-modulates all terms, to be called after every change */
-    private void updateModulo() {
+    public void updateModulo() {
         /* for all terms, term = term % prime  */
         
-        for(Map.Entry<Integer,Integer> entry: terms.entrySet()){
-            int key = entry.getKey();
-            int val = entry.getValue() % modulus;
+        Map<Integer,Integer> map = this.terms;
+        
+        for(Map.Entry<Integer,Integer> entry: map.entrySet()){
+            int exp = entry.getKey();
+            int coef = entry.getValue();
+            
+            coef = coef % modulus;
         
             /* Error checking for negative modulus */
-            if (val < 0){
-                val += modulus;
+            if (coef < 0){
+                coef += modulus;
             }
-        terms.put(key,val);
+            map.put(exp,coef);
         }
+        this.terms = map;
     }
     
     public String parsePoly(){
         String output = "";
         Map<Integer, Integer> a_terms = this.getTerms();
+        List<String> print = new ArrayList();
         
         for (Map.Entry<Integer,Integer> entry: a_terms.entrySet()){
-            String key = entry.getKey().toString();
-            String value = entry.getValue().toString();  
-            output = output + key + "X^" + value + " + ";  
-        } 
+            String exp = entry.getKey().toString();
+            String coef = entry.getValue().toString();  
+            output = output + exp+"^X"+coef+" + ";
+        }
+        output = output.substring(0,output.length()-3);
 //      System.out.println(output);
-        return output;
+        String reverse = new StringBuffer(output).reverse().toString();
+        return reverse;
     }
 
     /* Accessor functions */
@@ -93,7 +105,8 @@ public class Polynomial {
     }
 
     public void setTerms(Map<Integer, Integer> a_terms) {
-        this.terms = a_terms;
+        this.terms = new HashMap(a_terms);
+        this.updateModulo();
     }
     
     public void changeModulo(int n){
@@ -102,37 +115,38 @@ public class Polynomial {
     }
 
     public Polynomial add(Polynomial p) {
-        Map<Integer, Integer> poly1 = this.getTerms();
-        Map<Integer, Integer> poly2 = p.getTerms();
+        Map<Integer, Integer> poly1 = new HashMap(this.terms);
+        Map<Integer, Integer> poly2 = new HashMap(p.getTerms());
+        
+        Map<Integer,Integer> poly3 = new HashMap();
 
         /* Adds the coefficients from the second polynomial to the first if the first has such polynomials */
         for (Map.Entry<Integer,Integer> entry: poly1.entrySet()) {
             /* Get the degree for which to add stuff */
-            int key = entry.getKey();
+            int exp = entry.getKey();
 
             /* Get the coefficients for both polynomials */
             
-            Integer poly1_check = poly1.get(key); /* TODO if no return, set to 0 */
+            Integer poly1_check = poly1.get(exp); /* TODO if no return, set to 0 */
             if (poly1_check == null){
                 poly1_check = 0;
             }
             int poly1_coef = poly1_check;
             
-            Integer poly2_check = poly2.get(key); /* TODO if no return, set to 0 */
+            Integer poly2_check = poly2.get(exp); /* TODO if no return, set to 0 */
             if (poly2_check == null){
                 poly2_check = 0;
             } 
             int poly2_coef = poly2_check;
             
             /* Add the coefficient together and store them in poly1_terms */
-            poly1.put(key, poly1_coef + poly2_coef);
+            poly3.put(exp, poly1_coef + poly2_coef);
         }
-        /* takes all of poly1 and overwrites conflicting terms in poly2, leaving non-conflicting terms */        
-        poly2.putAll(poly1);
+        /* takes all of the combined polynomials and overwrites conflicting terms in poly2, leaving added terms together with terms that didnt exist in poly1 */        
+        poly2.putAll(poly3);
+        Polynomial pReturn = new Polynomial(poly2,this.modulus);
         /* Set the current coefficients to the added coefficients  */
-        this.setTerms(poly2);
-        this.updateModulo();
-        return this;
+        return pReturn;
     }
 
     public Polynomial divide(Polynomial p){
@@ -145,9 +159,11 @@ public class Polynomial {
         int[] newArray = new int[]{1,2};
         return newArray;
     }
-    void modulo(Polynomial p){
+    
+    public void modulo(Polynomial p){
         /* TODO */
     }
+    
     public Polynomial multiply(Polynomial p){
         /* TODO */
         Map<Integer,Integer> poly1 = this.getTerms();
@@ -173,16 +189,15 @@ public class Polynomial {
     }
     
     public Polynomial scalar(int s){
-        /* TODO */
-        Map<Integer,Integer> scalar = this.getTerms();
+        /* Done */
+        Map<Integer,Integer> scalar = new HashMap(this.terms);
         
         for(Map.Entry<Integer, Integer> entry: scalar.entrySet()){
-            int key = entry.getKey();
-            terms.put(key, scalar.get(key) * s);
+            int exp = entry.getKey();
+            int coef = entry.getValue();
+            scalar.put(exp, coef * s);
         }
-        this.terms = scalar;
-        this.updateModulo();
-        return this;
+        return new Polynomial(scalar,this.modulus);
     }
     
     public Polynomial subtract(Polynomial p){
