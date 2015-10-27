@@ -1,0 +1,13 @@
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}
+\contentsline {section}{\numberline {2}Methods}{2}{section.2}
+\contentsline {subsection}{\numberline {2.1}Input Requirements}{2}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Overview of Program}{2}{subsection.2.2}
+\contentsline {paragraph}{Parser}{2}{subsection.2.2}
+\contentsline {paragraph}{Polynomial}{3}{Item.15}
+\contentsline {paragraph}{Finite Fields}{3}{Item.15}
+\contentsline {subsection}{\numberline {2.3}Proof of Function}{4}{subsection.2.3}
+\contentsline {paragraph}{Basic Methods}{4}{subsection.2.3}
+\contentsline {paragraph}{Scalar Multiplication}{4}{subsection.2.3}
+\contentsline {paragraph}{Long Division}{4}{subsection.2.3}
+\contentsline {paragraph}{(Extended) Euclid's Algorithm}{4}{subsection.2.3}
+\contentsline {paragraph}{Two Polynomials Modulo Another}{4}{subsection.2.3}
