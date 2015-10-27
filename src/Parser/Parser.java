@@ -39,7 +39,7 @@ public class Parser {
     
     public void Parser(){
         String s = "";
-        System.out.println("Press Start:");
+        System.out.println("Please enter input:");
         Scanner scan = new Scanner(System.in);
         while(true){
             s = scan.nextLine();
@@ -108,16 +108,16 @@ public class Parser {
                             System.out.println(e.getMessage());
                         }
                     }
-                    else if(parts[1].equals("GCD")){
+                    else if(parts[1].equals("GCD")||parts[1].equals("gcd")){
                         try{
                             int prime = Integer.parseInt(parts[4]);
                             Polynomial poly1 = stringToPoly(parts[2],prime);
                             Polynomial poly2 = stringToPoly(parts[3],prime);
 
-                            int gcdOutput = poly1.gcd(poly2);
-                            int[] xGCDOutput = poly1.xGCD(poly2);
-        //                    System.out.println("GCD: "+ gcdOutput+"\n" "xGCD: "+xGCDOutput[0]+","+xGCDOutput[1]);
-                            System.out.println("Not yet implemented.");
+                            Polynomial gcdOutput = poly1.gcd(poly2);
+                            Polynomial[] xGCDOutput = poly1.xGCD(poly2);
+                            System.out.println("GCD: "+ gcdOutput.parsePoly());
+                            System.out.println("xGCD: x="+xGCDOutput[0].parsePoly()+" y= "+xGCDOutput[1].parsePoly());
                         }
                         catch(Exception e){
                             System.out.println(e.getMessage());

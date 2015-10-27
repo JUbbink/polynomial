@@ -201,8 +201,12 @@ public class Polynomial {
         Polynomial a = new Polynomial(this.getTerms(),this.getMod());
         Polynomial b = new Polynomial(p.getTerms(),p.getMod());
         
-        
-        
+        while(!b.areAllCoeffZero()){
+            Polynomial[] longDiv = a.divide(b);
+            Polynomial r = new Polynomial(longDiv[0].getTerms(),longDiv[0].getMod());
+            a = b;
+            b = r;
+        }
         return a;
     }
     
@@ -279,7 +283,7 @@ public class Polynomial {
         return pReturn;
     }
     
-    public int[] xGCD(Polynomial p){
+    public Polynomial[] xGCD(Polynomial p){
         /* Algorithm 1.2.11 Extended Euclidean algorithm for polynomials
         Input: poly a,b
         Output: poly x,y with gcd(a,b) = xa+yb
@@ -298,7 +302,45 @@ public class Polynomial {
         Step2 - Output x,y
         */
         
-        int[] newArray = new int[]{1,2};
-        return newArray;
+        Polynomial a = new Polynomial(this.getTerms(),this.getMod());
+        Polynomial b = new Polynomial(p.getTerms(),p.getMod());
+        
+        Map<Integer,Integer>map1 = new HashMap();
+        Map<Integer,Integer>map2 = new HashMap();
+        map1.put(0, 1);
+        map2.put(0, 0);
+        
+        Polynomial x = new Polynomial(map1,this.getMod());
+        Polynomial v = new Polynomial(map1,this.getMod());
+        Polynomial y = new Polynomial(map2,this.getMod());
+        Polynomial u = new Polynomial(map2,this.getMod());
+        Polynomial xPrime = new Polynomial(this.getMod());
+        Polynomial yPrime = new Polynomial(this.getMod());
+        
+        while(!b.areAllCoeffZero()){
+            Polynomial[] longDiv = a.divide(b);
+            Polynomial q = new Polynomial(longDiv[1].getTerms(),longDiv[1].getMod());
+            a = b;
+            b = new Polynomial(longDiv[0].getTerms(),longDiv[0].getMod());
+            xPrime = x;
+            yPrime = y;
+            x = u;
+            y = v;
+            u = xPrime.subtract(q.multiply(u));
+            v = yPrime.subtract(q.multiply(v));
+        }
+        Polynomial[] output = new Polynomial[2];
+        output[0]=x;
+        output[1]=y;
+        return output;
+    }
+    
+    public boolean areAllCoeffZero(){
+        for(Map.Entry<Integer,Integer> entry : this.terms.entrySet()){
+            if(entry.getValue()!=0){
+                return false;
+            }
+        }
+        return true;
     }
 }
