@@ -67,9 +67,13 @@ public class Parser {
                             Polynomial poly1 = stringToPoly(parts[2],Integer.MAX_VALUE);
                             Polynomial poly2 = stringToPoly(parts[3],Integer.MAX_VALUE);
                             Polynomial poly3 = stringToPoly(parts[4],Integer.MAX_VALUE);
+                            
+                            Polynomial[] poly4 = poly1.divide(poly3);
+                            Polynomial[] poly5 = poly2.divide(poly3);
 
                             //do math
-                            System.out.println("Not yet implemented.");
+                            System.out.println("Remainder of first Division: "+poly4[1].parsePoly());
+                            System.out.println("Remainder of Second Divison: "+poly5[1].parsePoly());
                         }
                         catch(Exception e){
                             System.out.println(e.getMessage());
