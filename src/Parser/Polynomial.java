@@ -51,7 +51,7 @@ public class Polynomial {
     
     public Polynomial(Map<Integer,Integer> a_terms){
         this.terms = new HashMap(a_terms);
-        this.modulus = 2147483646;//max value of an int
+        this.modulus = Integer.MAX_VALUE;//max value of an int
         this.updateModulo();
     }
     
@@ -59,7 +59,7 @@ public class Polynomial {
         Map<Integer,Integer> newMap = new HashMap();
         
         this.terms=newMap;
-        this.modulus = 2147483646;//max value of an int
+        this.modulus = Integer.MAX_VALUE;//max value of an int
     }
 
     /* Re-modulates all terms, to be called after every change */
@@ -152,42 +152,80 @@ public class Polynomial {
         return new Polynomial(poly2,newMod);
     }
 
-    public Polynomial divide(Polynomial p){
-        /* TODO */
-        return new Polynomial();
-    }
-    
-    public int[] gcd(Polynomial p){
-        /* TODO */
-        int[] newArray = new int[]{1,2};
+    public int[] divide(Polynomial b){
+        /* Algorithm 1.2.6, Long Division
+        Input: Poly a, b != 0
+        Output: quot (a,b), rem(a,b)
+        -----------------------------
+        Step1 - q = 0, r = a
+        Step2 - while deg(r)>=deg(b) do
+                |   q=q+val(r)/val(b)*X^exp(r)-exp(b)
+                |   r=r-val(r)/val(b)*X^exp(r)-exp(b)*b
+        Step3 - output q,r
+        */
+        
+        Polynomial q =  new Polynomial();
+        Polynomial r = new Polynomial(this.getTerms());//set r = a
+        
+        Map<Integer,Integer> map = new HashMap();
+        
+        while(deg(r)>=deg(b)){
+            
+        }
+        
+        int[] newArray = new int[]{0,1};
         return newArray;
     }
     
-    public Polynomial modulo(Polynomial p){
-        /* TODO */
-        return new Polynomial();
+    private int deg(Polynomial p){
+        Map<Integer,Integer> map = p.getTerms();
+        int degree = Integer.MIN_VALUE;
+        
+        for(Map.Entry<Integer,Integer> entry : map.entrySet()){
+            if(entry.getKey() >= degree){
+                degree = entry.getKey();
+            }
+        }
+        return degree;
+    }
+    
+    public int gcd(Polynomial p){
+        /* Algorithm 1.2.10, Euclid's algorithm for polynomials
+        Input: poly a,b
+        Output: gcd a,b
+        ----------------
+        Step1 - While b!= 0, do 
+                |   r = rem(a,b)
+                |   a = b;
+                |   b = r;
+        Step2 - Output a
+        */
+        int output = 0;
+        return output;
     }
     
     public Polynomial multiply(Polynomial p){
-        /* TODO */
         Map<Integer,Integer> poly1 = new HashMap(this.getTerms());
         Map<Integer,Integer> poly2 = new HashMap(p.getTerms());       
         /* 1. Create a new Polynomial poly3                                      */
         /* 2. Find the polynomials which you want to multiply as poly1 and poly2 */
 
         int newMod = Math.max(this.modulus,p.modulus);
-
         Map<Integer,Integer> poly3 = new HashMap();
 
-        for (int order1: poly1.keySet()) {
-            for (int order2 : poly2.keySet()) {
-                /* Get the coefficients that go with the orders */
-                Integer exponent = order1 + order2;
-                Integer coefficient =  poly1.get(order1) * poly2.get(order2);
-                if (poly3.containsKey(exponent)) {
-                    coefficient += poly3.get(exponent);
-                } 
-		poly3.put(exponent, coefficient);
+        for (Map.Entry<Integer,Integer> entry1: poly1.entrySet()) {
+            int expA = entry1.getKey();
+            int coefA = entry1.getValue();
+            for (Map.Entry<Integer,Integer> entry2 : poly2.entrySet()) {
+                int expB = entry2.getKey();
+                int coefB = entry2.getValue();
+                
+                int newExp = expA+expB;
+                int newCoef = 0;
+                if(poly3.containsKey(newExp)){
+                    newCoef = poly3.get(newExp);
+                }
+                poly3.put(newExp, newCoef+coefA*coefB);
             }
         }
         return new Polynomial(poly3,newMod);
@@ -240,7 +278,24 @@ public class Polynomial {
     }
     
     public int[] xGCD(Polynomial p){
-        /* TODO */
+        /* Algorithm 1.2.11 Extended Euclidean algorithm for polynomials
+        Input: poly a,b
+        Output: poly x,y with gcd(a,b) = xa+yb
+        --------------------------------------
+        Step1 - x=1,v=1,y=0,u=0
+        Step2 - While b!= 0, do 
+                |   q = quot(a,b);
+                |   a = b;
+                |   b = rem(a,b);
+                |   x' = x;
+                |   y' = y;
+                |   x = u;
+                |   y = v;
+                |   u = x' - q*u;
+                |   v = y' - q*v;
+        Step2 - Output x,y
+        */
+        
         int[] newArray = new int[]{1,2};
         return newArray;
     }

@@ -131,39 +131,22 @@ public class PolynomialTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of modulo method, of class Polynomial.
-     */
-    @Ignore
-    @Test
-    public void testModulo() {
-        System.out.println("modulo");
-        Polynomial p = null;
-        Polynomial instance = null;
-        instance.modulo(p);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of multiply method, of class Polynomial.
      */
-    @Ignore
     @Test
     public void testMultiply() {
         System.out.println("Multiplication Test");
         Map<Integer,Integer> map = new HashMap();
-        map.put(0,3);
-        map.put(1,3);
-        map.put(2,3);
-        map.put(3,3);
-        map.put(4,3);
+        map.put(2,1);
+        map.put(3,1);
+
         
         Map<Integer,Integer> map2 = new HashMap();
-        map2.put(1,3);
-        map2.put(2,3);
-        map2.put(3,3);
-        map2.put(4,3);
+        map2.put(4,1);
+        map2.put(3,1);
+
         
         Polynomial p1 = new Polynomial(map);
         Polynomial p2 = new Polynomial(map2);

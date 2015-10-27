@@ -78,10 +78,11 @@ public class Parser {
                     }
                     else if(parts[1].equals("basic")){
                         try{
+                            int prime = Integer.parseInt(parts[4]);
                             Polynomial poly1 = stringToPoly(parts[2]);
                             Polynomial poly2 = stringToPoly(parts[3]);
-
-                            int prime = Integer.parseInt(parts[4]);
+                            poly1.setModulo(prime);
+                            poly2.setModulo(prime);
 
                             Polynomial sum = poly1.add(poly2);
                             System.out.println("Sum: "+sum.parsePoly());
@@ -90,8 +91,7 @@ public class Parser {
                             System.out.println("Difference: "+difference.parsePoly());
 
                             Polynomial product = poly1.multiply(poly2);
-                            //System.out.println("Product: "+product.parsePoly());
-                            System.out.println("Not yet implemented.");
+                            System.out.println("Product: "+product.parsePoly());
                         }
                         catch(Exception e){
                             System.out.println(e.getMessage());
@@ -119,11 +119,9 @@ public class Parser {
                             poly1.setModulo(prime);
                             poly2.setModulo(prime);
 
-                            int[] gcdOutput = poly1.gcd(poly2);
-        //                    System.out.println("GCD: "+gcdOutput[0]+","+gcdOutput[1]);
-                            System.out.println("Not yet implemented.");
+                            int gcdOutput = poly1.gcd(poly2);
                             int[] xGCDOutput = poly1.xGCD(poly2);
-        //                    System.out.println("xGCD: "+xGCDOutput[0]+","+xGCDOutput[1]);
+        //                    System.out.println("GCD: "+ gcdOutput+"\n" "xGCD: "+xGCDOutput[0]+","+xGCDOutput[1]);
                             System.out.println("Not yet implemented.");
                         }
                         catch(Exception e){
@@ -138,7 +136,7 @@ public class Parser {
                             poly1.setModulo(prime);
                             poly2.setModulo(prime);
 
-                            Polynomial poly3 = poly1.divide(poly2);
+                            int[] outputArray = poly1.divide(poly2);
                             //System.out.println("Division: "+poly3.parsePoly());
                             System.err.println("Not yet implemented.");
                         }
