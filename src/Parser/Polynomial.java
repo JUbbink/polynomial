@@ -68,14 +68,7 @@ public class Polynomial {
         
         for(Map.Entry<Integer,Integer> entry: this.terms.entrySet()){
             int coef = entry.getValue();
-            
-            coef = coef % modulus;
-        
-            /* Error checking for negative modulus */
-//            if (coef < 0){
-//                coef += modulus;
-            //}
-            entry.setValue(coef);
+            entry.setValue(IntegerModP.modulo(coef,modulus));
         }
     }
     
@@ -152,7 +145,7 @@ public class Polynomial {
         return new Polynomial(poly2,newMod);
     }
 
-    public int[] divide(Polynomial b){
+    public Polynomial[] divide(Polynomial b){
         /* Algorithm 1.2.6, Long Division
         Input: Poly a, b != 0
         Output: quot (a,b), rem(a,b)
@@ -163,17 +156,21 @@ public class Polynomial {
                 |   r=r-val(r)/val(b)*X^exp(r)-exp(b)*b
         Step3 - output q,r
         */
-        
-        Polynomial q =  new Polynomial();
-        Polynomial r = new Polynomial(this.getTerms());//set r = a
-        
-        Map<Integer,Integer> map = new HashMap();
-        
+        int p = this.getMod();
+        Polynomial q =  new Polynomial(p);
+        Polynomial r = new Polynomial(this.getTerms(),p);//set r = a
         while(deg(r)>=deg(b)){
-            
+            Map<Integer,Integer> map = new HashMap();
+            int newExp = deg(r)-deg(b);
+            int newCoef = IntegerModP.divide(r.getTerms().get(deg(r)), b.getTerms().get(deg(b)), p);
+            map.put(newExp,newCoef);
+            Polynomial multiplyPoly = new Polynomial(map,p);
+            q = q.add(multiplyPoly);
+            r = r.subtract(multiplyPoly.multiply(b));
         }
-        
-        int[] newArray = new int[]{0,1};
+        Polynomial[] newArray = new Polynomial[2];
+        newArray[0] = q;
+        newArray[1] = r;
         return newArray;
     }
     
@@ -182,7 +179,7 @@ public class Polynomial {
         int degree = Integer.MIN_VALUE;
         
         for(Map.Entry<Integer,Integer> entry : map.entrySet()){
-            if(entry.getKey() >= degree){
+            if(entry.getKey() >= degree && entry.getValue() != 0){
                 degree = entry.getKey();
             }
         }
@@ -299,5 +296,4 @@ public class Polynomial {
         int[] newArray = new int[]{1,2};
         return newArray;
     }
-    
 }

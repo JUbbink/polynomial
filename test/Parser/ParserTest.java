@@ -21,7 +21,7 @@ public class ParserTest {
         System.out.println("stringToPoly test: ");
         Parser instance = new Parser();
         String test = "-5X^3+4x^-2-1X^7";
-        Polynomial poly = instance.stringToPoly(test);
+        Polynomial poly = instance.stringToPoly(test,Integer.MAX_VALUE);
         String result = poly.parsePoly();
         System.out.println("Output: "+result);
     }

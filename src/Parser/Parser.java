@@ -64,9 +64,9 @@ public class Parser {
                 if(parts[0].equals("poly")){
                     if(parts[1].equals("polymod")){
                         try{
-                            Polynomial poly1 = stringToPoly(parts[2]);
-                            Polynomial poly2 = stringToPoly(parts[3]);
-                            Polynomial poly3 = stringToPoly(parts[4]);
+                            Polynomial poly1 = stringToPoly(parts[2],Integer.MAX_VALUE);
+                            Polynomial poly2 = stringToPoly(parts[3],Integer.MAX_VALUE);
+                            Polynomial poly3 = stringToPoly(parts[4],Integer.MAX_VALUE);
 
                             //do math
                             System.out.println("Not yet implemented.");
@@ -79,10 +79,8 @@ public class Parser {
                     else if(parts[1].equals("basic")){
                         try{
                             int prime = Integer.parseInt(parts[4]);
-                            Polynomial poly1 = stringToPoly(parts[2]);
-                            Polynomial poly2 = stringToPoly(parts[3]);
-                            poly1.setModulo(prime);
-                            poly2.setModulo(prime);
+                            Polynomial poly1 = stringToPoly(parts[2],prime);
+                            Polynomial poly2 = stringToPoly(parts[3],prime);
 
                             Polynomial sum = poly1.add(poly2);
                             System.out.println("Sum: "+sum.parsePoly());
@@ -100,8 +98,7 @@ public class Parser {
                     else if(parts[1].equals("scalar")){
                         try{
                             int prime = Integer.parseInt(parts[4]);
-                            Polynomial poly1 = stringToPoly(parts[2]);
-                            poly1.setModulo(prime);
+                            Polynomial poly1 = stringToPoly(parts[2],prime);
                             int scalar = Integer.parseInt(parts[3]);
 
                             Polynomial poly2 = poly1.scalar(scalar);
@@ -113,11 +110,9 @@ public class Parser {
                     }
                     else if(parts[1].equals("GCD")){
                         try{
-                            Polynomial poly1 = stringToPoly(parts[2]);
-                            Polynomial poly2 = stringToPoly(parts[3]);
                             int prime = Integer.parseInt(parts[4]);
-                            poly1.setModulo(prime);
-                            poly2.setModulo(prime);
+                            Polynomial poly1 = stringToPoly(parts[2],prime);
+                            Polynomial poly2 = stringToPoly(parts[3],prime);
 
                             int gcdOutput = poly1.gcd(poly2);
                             int[] xGCDOutput = poly1.xGCD(poly2);
@@ -130,15 +125,13 @@ public class Parser {
                     }
                     else if(parts[1].equals("division")){
                         try{
-                            Polynomial poly1 = stringToPoly(parts[2]);
-                            Polynomial poly2 = stringToPoly(parts[3]);
                             int prime = Integer.parseInt(parts[4]);
-                            poly1.setModulo(prime);
-                            poly2.setModulo(prime);
+                            Polynomial poly1 = stringToPoly(parts[2], prime);
+                            Polynomial poly2 = stringToPoly(parts[3], prime);
 
-                            int[] outputArray = poly1.divide(poly2);
-                            //System.out.println("Division: "+poly3.parsePoly());
-                            System.err.println("Not yet implemented.");
+                            Polynomial[] outputArray = poly1.divide(poly2);
+                            System.out.println("Division: q = "+outputArray[0].parsePoly());
+                            System.out.println("r = "+outputArray[1].parsePoly());
                         }
                         catch(Exception e){
                             System.out.println(e.getMessage());
@@ -168,7 +161,7 @@ public class Parser {
         return j;
     }
     
-    public Polynomial stringToPoly(String input) throws Exception{
+    public Polynomial stringToPoly(String input, int p) throws Exception{
         Map<Integer,Integer> map = new HashMap();
         
         if(Character.isDigit(input.charAt(0))){
@@ -198,7 +191,7 @@ public class Parser {
             input = input.substring(numberOfDigits);
             map.put(exp, coef);
         }
-        return new Polynomial(map);
+        return new Polynomial(map, p);
     }
         
         //prime number p and irreducible polynomial, return addition and multiplication table

@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.Ignore;
 import static org.junit.Assert.*;
 
+
 /**
  *
  * @author Jeroen
@@ -154,6 +155,8 @@ public class PolynomialTest {
         System.out.println(p2.parsePoly());
         Polynomial p3 = p1.multiply(p2);
         System.out.println(p3.parsePoly());
+        
+        System.out.println("Inverse Test: "+IntegerModP.divide(4,2,2));
  
     }
 
