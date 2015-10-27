@@ -163,6 +163,7 @@ public class Polynomial {
             Map<Integer,Integer> map = new HashMap();
             int newExp = deg(r)-deg(b);
             int newCoef = IntegerModP.divide(r.getTerms().get(deg(r)), b.getTerms().get(deg(b)), p);
+            if(newCoef == -1) return new Polynomial[2];
             map.put(newExp,newCoef);
             Polynomial multiplyPoly = new Polynomial(map,p);
             q = q.add(multiplyPoly);
@@ -186,7 +187,7 @@ public class Polynomial {
         return degree;
     }
     
-    public int gcd(Polynomial p){
+    public Polynomial gcd(Polynomial p){
         /* Algorithm 1.2.10, Euclid's algorithm for polynomials
         Input: poly a,b
         Output: gcd a,b
@@ -197,8 +198,12 @@ public class Polynomial {
                 |   b = r;
         Step2 - Output a
         */
-        int output = 0;
-        return output;
+        Polynomial a = new Polynomial(this.getTerms(),this.getMod());
+        Polynomial b = new Polynomial(p.getTerms(),p.getMod());
+        
+        
+        
+        return a;
     }
     
     public Polynomial multiply(Polynomial p){

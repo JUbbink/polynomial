@@ -25,13 +25,16 @@ public class IntegerModP {
       int d = vals[0];
       int a = vals[1];
       int b = vals[2];
-      if (d > 1) { System.out.println("Inverse does not exist."); return 0; }
+      if (d > 1) { 
+          System.out.println("Inverse does not exist."); 
+          return 0; 
+      }
       if (a > 0) return a;
       return p + a;
    }
     
    public static int divide(int a, int b, int p) {
-       return modulo(a * inverse(b, p), p);
+       return inverse(b, p) != 0 ? modulo(a * inverse(b, p), p) : -1;
    }
    
    public static int multiply(int a, int b, int p){
