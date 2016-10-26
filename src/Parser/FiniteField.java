@@ -10,5 +10,8 @@ package Parser;
  * @author Jeroen
  */
 public class FiniteField {
+    private int order;
+    private Polynomial generator;
+    
     
 }
