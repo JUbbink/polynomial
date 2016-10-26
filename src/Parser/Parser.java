@@ -5,6 +5,8 @@ import java.io.*;
 import java.lang.*;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  @author Jeroen
@@ -135,61 +137,69 @@ public class Parser {
 
                     //prime number p and irreducible polynomial, return addition and multiplication table
                     //case1 is: "FF" "table" "prime" "poly"
-                    if(parts[1].equals("table")) {
-                        int o = Integer.parseInt(parts[2]);
-                        Polynomial poly = stringToPoly(parts[3], o);
-                        
-                        //finite field?
+                    if (parts[1].equals("table")) {
+                        try {
+                            int o = Integer.parseInt(parts[2]);
+                            Polynomial poly = stringToPoly(parts[3], o);
+                            
+                            //finite field?
+                        } catch (Exception ex) {
+                            System.out.println(ex.getMessage());
+                        }
                     }
-                    
-                    
+
                     // two field elements a,b, field, return sum a+b, product ab, quotient ab^-1 if b!=0 
                     //case2 is: "FF" "sum" "poly a" "poly b" "prime" "generating poly"
-                    if(parts[1].equals("sum")) {
+                    if (parts[1].equals("sum")) {
                         //do stuff
-                        int o = Integer.parseInt(parts[4]);
-                        Polynomial poly1 = stringToPoly(parts[2], o);
-                        Polynonial poly2 = stringToPoly(parts[3], o);
-                        
-                        Polynomial generator = stringToPoly(parts[5], o);
-                        
+                        try {
+                            int o = Integer.parseInt(parts[4]);
+                            Polynomial poly1 = stringToPoly(parts[2], o);
+                            Polynomial poly2 = stringToPoly(parts[3], o);
+
+                            Polynomial generator = stringToPoly(parts[5], o);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
                         //now to do actual math within the finite field
                         //adding TODO
-                        
+
                         //product TODO
-                        
                         //quotient TODO
-                        
                         //print the output TODO
                     }
-                    
-                    
+
                     //primitivity of field element
                     //case3 is: "FF" "primitivity" "poly a" "prime" "generating poly"
-                    if(parts[1].equals("primitivity")) {
-                        //do stuff
-                        
-                        int o = Integer.parseInt(parts[3]);
-                        Polynomial poly1 = stringToPoly(parts[2], o);
-                        Polynomial generator = stringToPoly(parts[4], o);
-                        
-                        //calculate primitivity
+                    if (parts[1].equals("primitivity")) {
+                        try {
+                            //do stuff
+                            
+                            int o = Integer.parseInt(parts[3]);
+                            Polynomial poly1 = stringToPoly(parts[2], o);
+                            Polynomial generator = stringToPoly(parts[4], o);
+                            
+                            //calculate primitivity
+                        } catch (Exception ex) {
+                            System.out.println(ex.getMessage());
+                        }
                     }
-                    
-                    
+
                     //find primitive elements in a field
                     //case4 is: "FF" "find" "prime" "generating poly"
-                    if(parts[1].equals("find")) {
-                        int o = Integer.parseInt(parts[2]);
-                        Polynomial poly = stringToPoly(parts[3], o);
-                        //do stuff
+                    if (parts[1].equals("find")) {
+                        try {
+                            int o = Integer.parseInt(parts[2]);
+                            Polynomial poly = stringToPoly(parts[3], o);
+                            //do stuff
+                        } catch (Exception ex) {
+                            System.out.println(ex.getMessage());
+                        }
                     }
-                    
-                    
+
                     //test irreducibility of a poly mod p, return irreducible polynomials
                     //case5 is: "FF" poly prime
                     //NYI
-                    
                 } else {
                     System.out.println("Please make a valid selection.");
                 }
