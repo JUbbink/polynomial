@@ -195,6 +195,10 @@ public class Polynomial {
         }
         Polynomial[] newArray = new Polynomial[2];
         newArray[0] = q;
+        if (r == null){
+            Map map = (Map) new HashMap().put(0,0);
+            r = new Polynomial(map, this.modulus);
+        }
         newArray[1] = r;
         return newArray;
     }

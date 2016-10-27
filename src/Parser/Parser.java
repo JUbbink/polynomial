@@ -133,16 +133,15 @@ public class Parser {
                         System.out.println("Please make a valid selection.");
                     }
                 } else if (parts[0].equals("FF")) {
-                    System.out.println("This functionality is not implemented yet.");
-
                     //prime number p and irreducible polynomial, return addition and multiplication table
                     //case1 is: "FF" "table" "prime" "poly"
                     if (parts[1].equals("table")) {
                         try {
-                            int o = Integer.parseInt(parts[2]);
-                            Polynomial poly = stringToPoly(parts[3], o);
-                            
-                            //finite field?
+                            int m = Integer.parseInt(parts[2]);
+                            Polynomial poly = stringToPoly(parts[3], m);
+                            FiniteField f = new FiniteField(poly);
+                            System.out.println(f.additionTable());
+                            System.out.println(f.multiplicationTable()); 
                         } catch (Exception ex) {
                             System.out.println(ex.getMessage());
                         }
@@ -151,46 +150,50 @@ public class Parser {
                     // two field elements a,b, field, return sum a+b, product ab, quotient ab^-1 if b!=0 
                     //case2 is: "FF" "sum" "poly a" "poly b" "prime" "generating poly"
                     if (parts[1].equals("sum")) {
-                        //do stuff
                         try {
-                            int o = Integer.parseInt(parts[4]);
-                            Polynomial poly1 = stringToPoly(parts[2], o);
-                            Polynomial poly2 = stringToPoly(parts[3], o);
+                            int m = Integer.parseInt(parts[4]);
+                            Polynomial poly1 = stringToPoly(parts[2], m);
+                            Polynomial poly2 = stringToPoly(parts[3], m);
+                            Polynomial generator = stringToPoly(parts[5], m);
 
-                            Polynomial generator = stringToPoly(parts[5], o);
+                            FiniteField f = new FiniteField(generator);
+                            Polynomial sum = f.sum(poly1, poly2);
+                            Polynomial product = f.product(poly1, poly2);
+                            Polynomial q = f.quotient(poly1, poly2);
+
+                            System.out.println("Sum is " + sum.parsePoly());
+                            System.out.println("Product is " + product.parsePoly());
+                            System.out.println("Quotient is " + q.parsePoly());
+
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
                         }
-                        //now to do actual math within the finite field
-                        //adding TODO
-
-                        //product TODO
-                        //quotient TODO
-                        //print the output TODO
                     }
 
+                    //TODO
                     //primitivity of field element
                     //case3 is: "FF" "primitivity" "poly a" "prime" "generating poly"
                     if (parts[1].equals("primitivity")) {
                         try {
                             //do stuff
-                            
-                            int o = Integer.parseInt(parts[3]);
-                            Polynomial poly1 = stringToPoly(parts[2], o);
-                            Polynomial generator = stringToPoly(parts[4], o);
-                            
+
+                            int m = Integer.parseInt(parts[3]);
+                            Polynomial poly1 = stringToPoly(parts[2], m);
+                            Polynomial generator = stringToPoly(parts[4], m);
+
                             //calculate primitivity
                         } catch (Exception ex) {
                             System.out.println(ex.getMessage());
                         }
                     }
 
+                    //TODO
                     //find primitive elements in a field
                     //case4 is: "FF" "find" "prime" "generating poly"
                     if (parts[1].equals("find")) {
                         try {
-                            int o = Integer.parseInt(parts[2]);
-                            Polynomial poly = stringToPoly(parts[3], o);
+                            int m = Integer.parseInt(parts[2]);
+                            Polynomial poly = stringToPoly(parts[3], m);
                             //do stuff
                         } catch (Exception ex) {
                             System.out.println(ex.getMessage());
