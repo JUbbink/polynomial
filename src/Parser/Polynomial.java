@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.TreeMap;
 
-
 /**
  *
  * @author Jeroen
@@ -72,6 +71,18 @@ public class Polynomial {
         this.modulus = Integer.MAX_VALUE;//max value of an int
     }
 
+    @Override
+    public Polynomial clone() throws CloneNotSupportedException {
+        super.clone();
+        return new Polynomial(this.terms, this.modulus);
+    }
+
+    public Polynomial makeUnit(int m) {
+        this.terms = (Map<Integer, Integer>) new HashMap().put(0, 1);
+        this.modulus = m;
+        return this;
+    }
+
     /* Re-modulates all terms, to be called after every change */
     private void updateModulo() {
         /* for all terms, term = term % prime  */
@@ -85,31 +96,35 @@ public class Polynomial {
     public int getMod() {
         return this.modulus;
     }
+    
+    public boolean equals(Polynomial p){
+        return this.terms.equals(p.getTerms()) && this.modulus == p.getMod();
+    }
 
     public int getMaxTerm() {
         return deg(this);
     }
-    
+
     /**
      * Returns a human readable string representation of the polynomial
-     * 
-     * @return String representation of the polynomial in the form a1X^c1 
-     * for all a1 in poly.getTerms.getValue and all c1 in poly.getTerms.getKey
-     * the String in printed in ascending order of powers
+     *
+     * @return String representation of the polynomial in the form a1X^c1 for
+     * all a1 in poly.getTerms.getValue and all c1 in poly.getTerms.getKey the
+     * String in printed in ascending order of powers
      */
-    public String parsePoly(){
+    public String parsePoly() {
         String output = "";
 
         //Converts the hashmap of orders and coefficients to a treemap, which is ordered 
         //on the key.
         Map<Integer, Integer> a_terms = new TreeMap<Integer, Integer>(this.getTerms());
-        
-        for (Map.Entry<Integer,Integer> entry: a_terms.entrySet()){
+
+        for (Map.Entry<Integer, Integer> entry : a_terms.entrySet()) {
             String exp = entry.getKey().toString();
-            String coef = entry.getValue().toString();  
+            String coef = entry.getValue().toString();
             output = output + coef + "X^" + exp + " + ";
         }
-        output = output.substring(0,output.length()-3);
+        output = output.substring(0, output.length() - 3);
 
         return output;
     }
@@ -195,8 +210,8 @@ public class Polynomial {
         }
         Polynomial[] newArray = new Polynomial[2];
         newArray[0] = q;
-        if (r == null){
-            Map map = (Map) new HashMap().put(0,0);
+        if (r == null) {
+            Map map = (Map) new HashMap().put(0, 0);
             r = new Polynomial(map, this.modulus);
         }
         newArray[1] = r;

@@ -5,10 +5,13 @@
  */
 package Parser;
 
+import static java.lang.Math.floor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -85,26 +88,50 @@ public class FiniteField {
         return result;
     }
 
-    //NOT DONE
+    //DONE
     public boolean isPrimitive(Polynomial p) {
         //TODO Add robustness
-//        if (p.getMaxTerm() <= 0) {
-//            return false;
-//        }
-//        int m = p.getMod();
-//        int o = (int) Math.pow(m, this.deg);
-//        List divisors = primeDivisors(o - 1);
-//        int len = divisors.size();
-//
-//        int i = 0;
-//        Map terms = new HashMap();
-//        terms.put(0, 1);
-//        Polynomial unitPoly = new Polynomial(terms, m);
-//
-//        while ((i < len) &&) {
-//            return false;
-//        }
-        return false;
+        if (p.getMaxTerm() <= 0) {
+            return false;
+        }
+        int m = p.getMod();
+        int o = (int) Math.pow(m, this.deg);
+        List divisors = primeDivisors(o - 1);
+        int len = divisors.size();
+
+        int i = 0;
+        Polynomial bla = exponentiate(p, (o - 1) / (int) divisors.get(i));
+        while ((i < len) && !(exponentiate(p, (o - 1) / (int) divisors.get(i)).equals(new Polynomial().makeUnit(m)))) {
+            i++;
+        }
+        return i >= len;
+    }
+
+    private Polynomial exponentiate(Polynomial p, int modulus) {
+        /* Get a local copy of the polynomial p */
+        Polynomial f = new Polynomial();
+        try {
+            f = p.clone();
+        } catch (CloneNotSupportedException ex) {
+            System.out.println(ex.toString());
+        }
+        Polynomial g = new Polynomial().makeUnit(modulus);
+
+        /* Get the number of moduli by doing a log_2(modulus) */
+        int nof_moduli = (int) floor(Math.log(modulus) / Math.log(2) + 1);
+
+        for (int i = 0; i < nof_moduli; i++) {
+            /* Square f */
+            if (i != 0) {
+                f = product(f, f);
+            }
+
+            /* Multiply g by f */
+            if (((modulus >> i) & 1) != 0) {
+                g = product(g, f);
+            }
+        }
+        return g;
     }
 
     //DONE when isPrimitive is done
