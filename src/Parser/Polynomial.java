@@ -58,6 +58,7 @@ public class Polynomial {
     
     public Polynomial(){
         Map<Integer,Integer> newMap = new HashMap();
+        newMap.put(1, 1);
         
         this.terms = newMap;
         this.modulus = Integer.MAX_VALUE;//max value of an int
@@ -78,8 +79,7 @@ public class Polynomial {
     }
     
     public int getMaxTerm(){
-        int result = Collections.max(this.terms);
-        return result;
+        return deg(this);
     }
     
     public String parsePoly(){
