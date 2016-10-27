@@ -2,6 +2,7 @@ package Parser;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -58,7 +59,7 @@ public class Polynomial {
     public Polynomial(){
         Map<Integer,Integer> newMap = new HashMap();
         
-        this.terms=newMap;
+        this.terms = newMap;
         this.modulus = Integer.MAX_VALUE;//max value of an int
     }
 
@@ -74,6 +75,11 @@ public class Polynomial {
     
     public int getMod(){
         return this.modulus;
+    }
+    
+    public int getMaxTerm(){
+        int result = Collections.max(this.terms);
+        return result;
     }
     
     public String parsePoly(){
