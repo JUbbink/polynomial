@@ -2,11 +2,7 @@ package Parser;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.TreeMap;
-
 
 /**
  *
@@ -82,34 +78,44 @@ public class Polynomial {
         }
     }
 
+    /**
+     * Returns the modulus of the polynomial
+     *
+     * @return An integer equal to polynomial.modulus
+     */
     public int getMod() {
         return this.modulus;
     }
 
+    /**
+     * Return the highest order of the polynomial
+     *
+     * @return Integer deg where deg = poly.getTerm.getKey.Max
+     */
     public int getMaxTerm() {
         return deg(this);
     }
-    
+
     /**
      * Returns a human readable string representation of the polynomial
-     * 
-     * @return String representation of the polynomial in the form a1X^c1 
-     * for all a1 in poly.getTerms.getValue and all c1 in poly.getTerms.getKey
-     * the String in printed in ascending order of powers
+     *
+     * @return String representation of the polynomial in the form a1X^c1 for
+     * all a1 in poly.getTerms.getValue and all c1 in poly.getTerms.getKey the
+     * String in printed in ascending order of powers
      */
-    public String parsePoly(){
+    public String parsePoly() {
         String output = "";
 
         //Converts the hashmap of orders and coefficients to a treemap, which is ordered 
         //on the key.
         Map<Integer, Integer> a_terms = new TreeMap<Integer, Integer>(this.getTerms());
-        
-        for (Map.Entry<Integer,Integer> entry: a_terms.entrySet()){
+
+        for (Map.Entry<Integer, Integer> entry : a_terms.entrySet()) {
             String exp = entry.getKey().toString();
-            String coef = entry.getValue().toString();  
+            String coef = entry.getValue().toString();
             output = output + coef + "X^" + exp + " + ";
         }
-        output = output.substring(0,output.length()-3);
+        output = output.substring(0, output.length() - 3);
 
         return output;
     }
@@ -119,16 +125,39 @@ public class Polynomial {
         return this.terms;
     }
 
+    /**
+     * Replaces the terms of the polynomial with the newly given terms.
+     *
+     * @param a_terms a HashMap containing the new terms, where the key is the
+     * order and the value is the coefficient corresponding to that order.
+     *
+     *
+     */
     public void setTerms(Map<Integer, Integer> a_terms) {
         this.terms = new HashMap(a_terms);
         this.updateModulo();
     }
 
+    /**
+     * Sets the modulus of the polynomial and updates it.
+     *
+     * @param n an Integer containing the new modulus.
+     */
     public void setModulo(int n) {
         this.modulus = n;
         this.updateModulo();
     }
 
+    /**
+     * Add a polynomial to this polynomial
+     *
+     * @param p The polynomial to add to this polynomial p != 0 && this != 0
+     *
+     * @return Polynomial(poly2, newMod) where poly2 = forall i
+     * p.getTerms.getValue(i) + this.getTerms.getValue(i) if
+     * p.getTerms.getKey(i).exists || this.getTerms.getKey(i).exists and newMod
+     * = Math.max(this.modulus, p.modulus
+     */
     public Polynomial add(Polynomial p) {
         Map<Integer, Integer> poly1 = new HashMap(this.terms);
         Map<Integer, Integer> poly2 = new HashMap(p.getTerms());
@@ -166,7 +195,12 @@ public class Polynomial {
         /* Set the current coefficients to the added coefficients  */
         return new Polynomial(poly2, newMod);
     }
-
+    /**
+     * Divides the polynomial with the given polynomial
+     * 
+     * @param b the polynomial which divides this
+     * @return the quotient of this/b and the remainder of this/b
+     */
     public Polynomial[] divide(Polynomial b) {
         /* Algorithm 1.2.6, Long Division
         Input: Poly a, b != 0
@@ -211,6 +245,12 @@ public class Polynomial {
         return degree;
     }
 
+    /**
+     * Returns the GCD of this polynomial and another polynomial.
+     * 
+     * @param p the second polynomial
+     * @return GCD(this, p)
+     */
     public Polynomial gcd(Polynomial p) {
         /* Algorithm 1.2.10, Euclid's algorithm for polynomials
         Input: poly a,b
@@ -233,7 +273,12 @@ public class Polynomial {
         }
         return a;
     }
-
+    /**
+     * Multiply this polynomial with the given polynomial.
+     * 
+     * @param p the second polynomial 
+     * @return A polynomial such that output = this * p
+     */
     public Polynomial multiply(Polynomial p) {
         Map<Integer, Integer> poly1 = new HashMap(this.getTerms());
         Map<Integer, Integer> poly2 = new HashMap(p.getTerms());
@@ -260,7 +305,12 @@ public class Polynomial {
         }
         return new Polynomial(poly3, newMod);
     }
-
+    /**
+     * Returns the scalar multiple of the polynomial and an integer.
+     * 
+     * @param s the Integer
+     * @return A polynomial such that output = this * s
+     */
     public Polynomial scalar(int s) {
         /* Done */
         Map<Integer, Integer> scalar = new HashMap(this.terms);
@@ -272,7 +322,12 @@ public class Polynomial {
         }
         return new Polynomial(scalar, this.modulus);
     }
-
+    /**
+     * Subtracts a given polynomial from this polynomial.
+     * 
+     * @param p the second polynomial
+     * @return a polynomial such that output = this - p
+     */
     public Polynomial subtract(Polynomial p) {
         /* TODO */
         Map<Integer, Integer> poly1 = new HashMap(this.getTerms());
@@ -307,7 +362,11 @@ public class Polynomial {
         Polynomial pReturn = new Polynomial(poly2, this.modulus);
         return pReturn;
     }
-
+    /**
+     * returns the extended GCD of this polynomial and a given polynomial
+     * @param p the second polynomial
+     * @return 2 polynomials x, y such that gcd(this, p) = x * this + y * p
+     */
     public Polynomial[] xGCD(Polynomial p) {
         /* Algorithm 1.2.11 Extended Euclidean algorithm for polynomials
         Input: poly a,b
@@ -360,6 +419,11 @@ public class Polynomial {
         return output;
     }
 
+    /**
+     * Checks whether all coefficients in the polynomial are 0.
+     *
+     * @return true iff forall i, this.getTerms.getValue(i) == 0
+     */
     public boolean areAllCoeffZero() {
         for (Map.Entry<Integer, Integer> entry : this.terms.entrySet()) {
             if (entry.getValue() != 0) {
