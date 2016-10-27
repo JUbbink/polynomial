@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.TreeMap;
 
 
 /**
@@ -82,10 +83,19 @@ public class Polynomial {
         return deg(this);
     }
     
+    /**
+     * Returns a human readable string representation of the polynomial
+     * 
+     * @return String representation of the polynomial in the form a1X^c1 
+     * for all a1 in poly.getTerms.getValue and all c1 in poly.getTerms.getKey
+     * the String in printed in ascending order of powers
+     */
     public String parsePoly(){
         String output = "";
-        Map<Integer, Integer> a_terms = this.getTerms();
-        List<String> print = new ArrayList();
+
+        //Converts the hashmap of orders and coefficients to a treemap, which is ordered 
+        //on the key.
+        Map<Integer, Integer> a_terms = new TreeMap<Integer, Integer>(this.getTerms());
         
         for (Map.Entry<Integer,Integer> entry: a_terms.entrySet()){
             String exp = entry.getKey().toString();
@@ -93,9 +103,7 @@ public class Polynomial {
             output = output + coef + "X^" + exp + " + ";
         }
         output = output.substring(0,output.length()-3);
-//      System.out.println(output);
-        //String reverse = new StringBuffer(output).reverse().toString();
-        //return reverse;
+
         return output;
     }
 
