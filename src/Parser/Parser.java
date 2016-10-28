@@ -163,7 +163,11 @@ public class Parser {
 
                             System.out.println("Sum is " + sum.toString());
                             System.out.println("Product is " + product.toString());
-                            System.out.println("Quotient is " + q.toString());
+                            if (!(q.getMod() == Integer.MAX_VALUE)) {
+                                System.out.println("Inverse does not exist");
+                            } else {
+                                System.out.println("Quotient is " + q.toString());
+                            }
 
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
@@ -209,7 +213,7 @@ public class Parser {
                     //test irreducibility of a poly mod p, return irreducible polynomials
                     //case5 is: "FF" irr poly prime
                     //NYI
-                    if (parts[1].equals("irr")){
+                    if (parts[1].equals("irr")) {
                         System.out.println("This has not yet been implemented.");
                     }
                 } else {

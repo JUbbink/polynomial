@@ -252,7 +252,7 @@ public class FiniteField {
         return false;
     }
 
-    private int getOrder() {
+    public int getOrder() {
 
         return (int) Math.pow(this.modulo, this.deg);
     }
