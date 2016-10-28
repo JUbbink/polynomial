@@ -199,7 +199,7 @@ public class Parser {
                             int m = Integer.parseInt(parts[2]);
                             Polynomial poly = stringToPoly(parts[3], m);
                             FiniteField f = new FiniteField(poly);
-                            Polynomial poly1 = f.primitive(); //THIS NEEDS TO BE FIXED
+                            Polynomial poly1 = f.primitive();
                             System.out.println(poly.toString());
                         } catch (Exception ex) {
                             System.out.println(ex.getMessage());
@@ -207,8 +207,11 @@ public class Parser {
                     }
 
                     //test irreducibility of a poly mod p, return irreducible polynomials
-                    //case5 is: "FF" poly prime
+                    //case5 is: "FF" irr poly prime
                     //NYI
+                    if (parts[1].equals("irr")){
+                        System.out.println("This has not yet been implemented.");
+                    }
                 } else {
                     System.out.println("Please make a valid selection.");
                 }
