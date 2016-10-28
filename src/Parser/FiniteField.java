@@ -83,7 +83,7 @@ public class FiniteField {
             output = output + "\n";
             output = output + elements.get(i).toString();
             for (int j = 0; j < elements.size(); j++) {
-                output += "|" + sum((Polynomial) elements.get(i), 
+                output += "|" + sum((Polynomial) elements.get(i),
                         (Polynomial) elements.get(j)).toString();
             }
             output += "\n";
@@ -116,7 +116,7 @@ public class FiniteField {
             output = output + "\n";
             output = output + elements.get(i).toString();
             for (int j = 0; j < elements.size(); j++) {
-                output += "|" + product((Polynomial) elements.get(i), 
+                output += "|" + product((Polynomial) elements.get(i),
                         (Polynomial) elements.get(j)).toString();
             }
             output += "\n";
@@ -151,14 +151,14 @@ public class FiniteField {
             return false;
         }
         int m = p.getMod();
-        int o = (int) Math.pow(m, this.deg);
+        int o = this.getOrder();
         List divisors = primeDivisors(o - 1);
         int len = divisors.size();
 
         int i = 0;
         Polynomial bla = exponentiate(p, (o - 1) / (int) divisors.get(i));
-        while ((i < len) && !(exponentiate(p, (o - 1) / 
-                (int) divisors.get(i)).equals(new Polynomial().makeUnit(m)))) {
+        while ((i < len) && !(exponentiate(p, (o - 1)
+                / (int) divisors.get(i)).equals(new Polynomial().makeUnit(m)))) {
             i++;
         }
         return i >= len;
@@ -250,5 +250,10 @@ public class FiniteField {
             }
         }
         return false;
+    }
+
+    private int getOrder() {
+
+        return (int) Math.pow(this.modulo, this.deg);
     }
 }

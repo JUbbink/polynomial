@@ -141,7 +141,7 @@ public class Parser {
                             Polynomial poly = stringToPoly(parts[3], m);
                             FiniteField f = new FiniteField(poly);
                             System.out.println(f.additionTable());
-                            System.out.println(f.multiplicationTable()); 
+                            System.out.println(f.multiplicationTable());
                         } catch (Exception ex) {
                             System.out.println(ex.getMessage());
                         }
@@ -170,31 +170,37 @@ public class Parser {
                         }
                     }
 
-                    //TODO
                     //primitivity of field element
                     //case3 is: "FF" "primitivity" "poly a" "prime" "generating poly"
                     if (parts[1].equals("primitivity")) {
                         try {
-                            //do stuff
-
                             int m = Integer.parseInt(parts[3]);
                             Polynomial poly1 = stringToPoly(parts[2], m);
                             Polynomial generator = stringToPoly(parts[4], m);
-
-                            //calculate primitivity
+                            FiniteField f = new FiniteField(generator);
+                            if (f.isPrimitive(poly1)) {
+                                System.out.println("This Polynomial is a "
+                                        + "primitive element of this "
+                                        + "finite field.");
+                            } else {
+                                System.out.println("This Polynomial is NOT a "
+                                        + "primitive element of this "
+                                        + "finite field.");
+                            }
                         } catch (Exception ex) {
                             System.out.println(ex.getMessage());
                         }
                     }
 
-                    //TODO
                     //find primitive elements in a field
                     //case4 is: "FF" "find" "prime" "generating poly"
                     if (parts[1].equals("find")) {
                         try {
                             int m = Integer.parseInt(parts[2]);
                             Polynomial poly = stringToPoly(parts[3], m);
-                            //do stuff
+                            FiniteField f = new FiniteField(poly);
+                            Polynomial poly1 = f.primitive(); //THIS NEEDS TO BE FIXED
+                            System.out.println(poly.toString());
                         } catch (Exception ex) {
                             System.out.println(ex.getMessage());
                         }
