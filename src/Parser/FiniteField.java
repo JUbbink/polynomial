@@ -36,6 +36,7 @@ public class FiniteField {
         generator = g;
         modulo = g.getMod();
         deg = g.getMaxTerm();
+        elements = new ArrayList<>();
 
         for (int i = 0; i < Math.pow(modulo, deg); i++) {
             Polynomial element = new Polynomial(modulo);
@@ -134,7 +135,7 @@ public class FiniteField {
         return g;
     }
 
-    //DONE when isPrimitive is done
+    //DONE
     public Polynomial primitive() {
         int r = (int) (Math.random() % this.elements.size());
         while (!isPrimitive((Polynomial) this.elements.get(r))) {
