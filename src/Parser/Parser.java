@@ -140,7 +140,9 @@ public class Parser {
                             int m = Integer.parseInt(parts[2]);
                             Polynomial poly = stringToPoly(parts[3], m);
                             FiniteField f = new FiniteField(poly);
+                            System.out.println("Addition Table:");
                             System.out.println(f.additionTable());
+                            System.out.println("Addition Table:");
                             System.out.println(f.multiplicationTable());
                         } catch (Exception ex) {
                             System.out.println(ex.getMessage());

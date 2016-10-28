@@ -60,9 +60,7 @@ public class FiniteField {
     /*List of Methods*/
     //NOT DONE
     public String additionTable() {
-        String topleft = new String();
-        topleft = topleft + "+";
-        int longestString = topleft.length();
+        int longestString = 0;
         for (int i = 0; i < elements.size(); i++) {
             int length = elements.get(i).toString().length();
             if (length > longestString) {
@@ -71,7 +69,6 @@ public class FiniteField {
         }
         int lineLength = (elements.size() + 1) * longestString + elements.size();
         String output = new String();
-        output += topleft;
         for (int i = 0; i < elements.size(); i++) {
             output += "|" + elements.get(i).toString();
         }
@@ -93,9 +90,7 @@ public class FiniteField {
 
     //NOT DONE
     public String multiplicationTable() {
-        String topleft = new String();
-        topleft = topleft + "*";
-        int longestString = topleft.length();
+        int longestString = 0;
         for (int i = 0; i < elements.size(); i++) {
             int length = elements.get(i).toString().length();
             if (length > longestString) {
@@ -104,7 +99,6 @@ public class FiniteField {
         }
         int lineLength = (elements.size() + 1) * longestString + elements.size();
         String output = new String();
-        output += topleft;
         for (int i = 0; i < elements.size(); i++) {
             output += "|" + elements.get(i).toString();
         }
