@@ -70,8 +70,8 @@ public class Parser {
                             Polynomial[] poly5 = poly2.divide(poly3);
 
                             //do math
-                            System.out.println("Remainder of first Division: " + poly4[1].parsePoly());
-                            System.out.println("Remainder of Second Divison: " + poly5[1].parsePoly());
+                            System.out.println("Remainder of first Division: " + poly4[1].toString());
+                            System.out.println("Remainder of Second Divison: " + poly5[1].toString());
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
                         }
@@ -83,13 +83,13 @@ public class Parser {
                             Polynomial poly2 = stringToPoly(parts[3], prime);
 
                             Polynomial sum = poly1.add(poly2);
-                            System.out.println("Sum: " + sum.parsePoly());
+                            System.out.println("Sum: " + sum.toString());
 
                             Polynomial difference = poly1.subtract(poly2);
-                            System.out.println("Difference: " + difference.parsePoly());
+                            System.out.println("Difference: " + difference.toString());
 
                             Polynomial product = poly1.multiply(poly2);
-                            System.out.println("Product: " + product.parsePoly());
+                            System.out.println("Product: " + product.toString());
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
                         }
@@ -100,7 +100,7 @@ public class Parser {
                             int scalar = Integer.parseInt(parts[3]);
 
                             Polynomial poly2 = poly1.scalar(scalar);
-                            System.out.println("Scalar: " + poly2.parsePoly());
+                            System.out.println("Scalar: " + poly2.toString());
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
                         }
@@ -112,8 +112,8 @@ public class Parser {
 
                             Polynomial gcdOutput = poly1.gcd(poly2);
                             Polynomial[] xGCDOutput = poly1.xGCD(poly2);
-                            System.out.println("GCD: " + gcdOutput.parsePoly());
-                            System.out.println("xGCD: x=" + xGCDOutput[0].parsePoly() + " y= " + xGCDOutput[1].parsePoly());
+                            System.out.println("GCD: " + gcdOutput.toString());
+                            System.out.println("xGCD: x=" + xGCDOutput[0].toString() + " y= " + xGCDOutput[1].toString());
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
                         }
@@ -124,8 +124,8 @@ public class Parser {
                             Polynomial poly2 = stringToPoly(parts[3], prime);
 
                             Polynomial[] outputArray = poly1.divide(poly2);
-                            System.out.println("Division: q = " + outputArray[0].parsePoly());
-                            System.out.println("r = " + outputArray[1].parsePoly());
+                            System.out.println("Division: q = " + outputArray[0].toString());
+                            System.out.println("r = " + outputArray[1].toString());
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
                         }
@@ -161,9 +161,9 @@ public class Parser {
                             Polynomial product = f.product(poly1, poly2);
                             Polynomial q = f.quotient(poly1, poly2);
 
-                            System.out.println("Sum is " + sum.parsePoly());
-                            System.out.println("Product is " + product.parsePoly());
-                            System.out.println("Quotient is " + q.parsePoly());
+                            System.out.println("Sum is " + sum.toString());
+                            System.out.println("Product is " + product.toString());
+                            System.out.println("Quotient is " + q.toString());
 
                         } catch (Exception e) {
                             System.out.println(e.getMessage());

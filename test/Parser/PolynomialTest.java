@@ -46,7 +46,7 @@ public class PolynomialTest {
     }
 
     /**
-     * Test of parsePoly method, of class Polynomial.
+     * Test of toString method, of class Polynomial.
      */
     @Ignore
     @Test
@@ -54,7 +54,7 @@ public class PolynomialTest {
         System.out.println("parsePoly");
         Polynomial instance = null;
         String expResult = "";
-        String result = instance.parsePoly();
+        String result = instance.toString();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -151,10 +151,10 @@ public class PolynomialTest {
         
         Polynomial p1 = new Polynomial(map);
         Polynomial p2 = new Polynomial(map2);
-        System.out.println(p1.parsePoly());
-        System.out.println(p2.parsePoly());
+        System.out.println(p1.toString());
+        System.out.println(p2.toString());
         Polynomial p3 = p1.multiply(p2);
-        System.out.println(p3.parsePoly());
+        System.out.println(p3.toString());
         
         System.out.println("Inverse Test: "+IntegerModP.divide(4,2,2));
  
@@ -184,8 +184,8 @@ public class PolynomialTest {
         
         Polynomial p1 = new Polynomial(map,m1);
         Polynomial p2 = new Polynomial(map,m2);
-        System.out.println(p1.parsePoly());
-        System.out.println(p2.parsePoly());
+        System.out.println(p1.toString());
+        System.out.println(p2.toString());
         
     }
     
@@ -217,9 +217,9 @@ public class PolynomialTest {
         Polynomial p3 = new Polynomial();
         p3 = p1.scalar(s);
         
-        System.out.println("p1= " + p1.parsePoly());
-        System.out.println("p2= " + p2.parsePoly());
-        System.out.println("p1*"+s+"= "+p3.parsePoly());
+        System.out.println("p1= " + p1.toString());
+        System.out.println("p2= " + p2.toString());
+        System.out.println("p1*"+s+"= "+p3.toString());
 
         /*  */
     }
@@ -250,10 +250,10 @@ public class PolynomialTest {
         
         Polynomial p1 = new Polynomial(map,2);
         Polynomial p2 = new Polynomial(map2,5);
-        System.out.println(p1.parsePoly());
-        System.out.println(p2.parsePoly()); 
+        System.out.println(p1.toString());
+        System.out.println(p2.toString()); 
         Polynomial p3 = p1.add(p2);
-        System.out.println(p3.parsePoly());
+        System.out.println(p3.toString());
     }
 
     /**

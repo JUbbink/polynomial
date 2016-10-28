@@ -112,7 +112,7 @@ public class Polynomial {
      * all a1 in poly.getTerms.getValue and all c1 in poly.getTerms.getKey the
      * String in printed in ascending order of powers
      */
-    public String parsePoly() {
+    public String toString() {
         String output = "";
 
         //Converts the hashmap of orders and coefficients to a treemap, which is ordered 

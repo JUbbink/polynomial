@@ -60,13 +60,68 @@ public class FiniteField {
     /*List of Methods*/
     //NOT DONE
     public String additionTable() {
-        //TODO: Return a string
-        return "NYI";
+        String topleft = new String();
+        topleft = topleft + "+";
+        int longestString = topleft.length();
+        for (int i = 0; i < elements.size(); i++) {
+            int length = elements.get(i).toString().length();
+            if (length > longestString) {
+                longestString = length;
+            }
+        }
+        int lineLength = (elements.size() + 1) * longestString + elements.size();
+        String output = new String();
+        output += topleft;
+        for (int i = 0; i < elements.size(); i++) {
+            output += "|" + elements.get(i).toString();
+        }
+        output = output + "\n";
+        for (int i = 0; i < elements.size(); i++) {
+            for (int j = 0; j < lineLength; j++) {
+                output += "-";
+            }
+            output = output + "\n";
+            output = output + elements.get(i).toString();
+            for (int j = 0; j < elements.size(); j++) {
+                output += "|" + sum((Polynomial) elements.get(i), 
+                        (Polynomial) elements.get(j)).toString();
+            }
+            output += "\n";
+        }
+        return output;
     }
 
     //NOT DONE
     public String multiplicationTable() {
-        return "NYI";
+        String topleft = new String();
+        topleft = topleft + "*";
+        int longestString = topleft.length();
+        for (int i = 0; i < elements.size(); i++) {
+            int length = elements.get(i).toString().length();
+            if (length > longestString) {
+                longestString = length;
+            }
+        }
+        int lineLength = (elements.size() + 1) * longestString + elements.size();
+        String output = new String();
+        output += topleft;
+        for (int i = 0; i < elements.size(); i++) {
+            output += "|" + elements.get(i).toString();
+        }
+        output = output + "\n";
+        for (int i = 0; i < elements.size(); i++) {
+            for (int j = 0; j < lineLength; j++) {
+                output += "-";
+            }
+            output = output + "\n";
+            output = output + elements.get(i).toString();
+            for (int j = 0; j < elements.size(); j++) {
+                output += "|" + product((Polynomial) elements.get(i), 
+                        (Polynomial) elements.get(j)).toString();
+            }
+            output += "\n";
+        }
+        return output;
     }
 
     //DONE
@@ -102,7 +157,8 @@ public class FiniteField {
 
         int i = 0;
         Polynomial bla = exponentiate(p, (o - 1) / (int) divisors.get(i));
-        while ((i < len) && !(exponentiate(p, (o - 1) / (int) divisors.get(i)).equals(new Polynomial().makeUnit(m)))) {
+        while ((i < len) && !(exponentiate(p, (o - 1) / 
+                (int) divisors.get(i)).equals(new Polynomial().makeUnit(m)))) {
             i++;
         }
         return i >= len;
